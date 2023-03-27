@@ -1,11 +1,11 @@
-import express from "express";
-import cors from "cors";
-import helmet from "helmet";
-import { errorHandler } from "./middleware/errorHandler";
-import { PrismaClient } from "@prisma/client";
-import nodeRoutes from "./routes/nodeRoutes";
-import taskRoutes from "./routes/taskRoutes";
-import authRoutes from "./routes/authRoutes";
+import express from 'express';
+import cors from 'cors';
+import helmet from 'helmet';
+import { errorHandler } from './middleware/errorHandler';
+import { PrismaClient } from '@prisma/client';
+import nodeRoutes from './routes/nodeRoutes';
+import taskRoutes from './routes/taskRoutes';
+import authRoutes from './routes/authRoutes';
 
 const prisma = new PrismaClient();
 
@@ -19,11 +19,11 @@ app.use(express.urlencoded({ extended: false }));
 
 // Routes
 app.use('/', (_req, res) => res.send('OMNIA-1'));
-app.use("/api/auth", authRoutes);
-app.use("/api/nodes", nodeRoutes);
-app.use("/api/tasks", taskRoutes);
+app.use('/api/auth', authRoutes);
+app.use('/api/nodes', nodeRoutes);
+app.use('/api/tasks', taskRoutes);
 
-// Error handling 
+// Error handling
 app.use(errorHandler);
 
 const PORT = process.env.PORT || 3000;
@@ -33,7 +33,7 @@ app.listen(PORT, () => {
 });
 
 // Prisma cleanup
-process.on("SIGINT", async () => {
+process.on('SIGINT', async () => {
   await prisma.$disconnect();
   process.exit(0);
 });
