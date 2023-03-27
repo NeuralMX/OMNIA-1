@@ -14,7 +14,7 @@ router.get('/', authenticate, authorize('admin'), async (_req, res) => {
   }
 });
 
-router.post("/", authenticate, authorize("admin"), async (req, res) => {
+router.post('/', authenticate, authorize('admin'), async (req, res) => {
   const { name, ipAddress } = req.body;
 
   try {

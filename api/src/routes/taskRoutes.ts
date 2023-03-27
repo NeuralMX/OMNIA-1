@@ -1,10 +1,10 @@
-import express from "express";
-import { PrismaClient, TaskStatus } from "@prisma/client";
+import express from 'express';
+import { PrismaClient, TaskStatus } from '@prisma/client';
 
 const prisma = new PrismaClient();
 const router = express.Router();
 
-router.get("/", async (_req, res) => {
+router.get('/', async (_req, res) => {
   try {
     const tasks = await prisma.task.findMany({ include: { node: true } });
     res.json(tasks);
@@ -13,16 +13,13 @@ router.get("/", async (_req, res) => {
   }
 });
 
-router.post("/", async (req, res) => {
+router.post('/', async (req, res) => {
   const { description, nodeId } = req.body;
 
   if (!description || !nodeId) {
-    return res
-      .status(400)
-      .json({
-        message:
-          "Se deben proporcionar una descripción y un identificador de nodo.",
-      });
+    return res.status(400).json({
+      message: 'Se deben proporcionar una descripción y un identificador de nodo.',
+    });
   }
 
   try {
@@ -33,12 +30,12 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.put("/:id", async (req, res) => {
+router.put('/:id', async (req, res) => {
   const { id } = req.params;
   const { status } = req.body;
 
   if (!status) {
-    return res.status(400).json({ message: "Se debe proporcionar un estado." });
+    return res.status(400).json({ message: 'Se debe proporcionar un estado.' });
   }
 
   try {
@@ -54,7 +51,7 @@ router.put("/:id", async (req, res) => {
   }
 });
 
-router.delete("/:id", async (req, res) => {
+router.delete('/:id', async (req, res) => {
   const { id } = req.params;
 
   try {
