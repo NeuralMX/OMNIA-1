@@ -83,7 +83,7 @@ Para instalar y configurar el proyecto OMNIA-1, siga estos pasos:
 git clone https://github.com/user/omnia-1.git
 
 2. Instale las dependencias del proyecto:
-cd omnia-1
+cd OMNIA-1
 npm install
 
 3. Configure las variables de entorno en el archivo `.env`. Asegúrese de proporcionar los valores adecuados para la base de datos y las claves JWT.
@@ -96,9 +96,9 @@ npm run dev
 
 El servidor de desarrollo se iniciará en el puerto especificado en el archivo `.env`. Ahora puede comenzar a utilizar la API de OMNIA-1.
 
-## Documentación
-
-Puede encontrar la documentación completa de la API, incluidas las rutas, los métodos y los formatos de solicitud/respuesta en [API_DOC.md](./API_DOC.md).
+# Documentación de la API
+- [Nodes](./docs/api/nodes.md)
+- [Tasks](./docs/api/tasks.md)
 
 ## Contribuir
 

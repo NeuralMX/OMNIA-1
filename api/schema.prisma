@@ -8,11 +8,20 @@ datasource db {
 }
 
 model Node {
-  id          String    @id @default(uuid())
-  name        String
-  ipAddress   String
-  description String?
-  tasks       Task[]
+  id            String     @id @default(uuid())
+  name          String
+  ipAddress     String
+  description   String?
+  tasks         Task[]
+  gpuModel      String?
+  gpuMemory     Int?
+  gpuTemperature Float?
+  cpuModel      String?
+  cpuCores      Int?
+  cpuSpeed      Float?
+  ram           Float?
+  storage       Float?
+  os            String?
 }
 
 model Task {
@@ -21,12 +30,22 @@ model Task {
   status      TaskStatus
   node        Node   @relation(fields: [nodeId], references: [id])
   nodeId      String
+  type        TaskType  @default(inference)
+  code        String?
+  payload     String?
 }
 
 enum TaskStatus {
   pending
   in_progress
   completed
+}
+
+enum TaskType {
+  inference
+  training
+  fine_tuning
+  execute_code
 }
 
 model Token {

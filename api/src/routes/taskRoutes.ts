@@ -14,16 +14,19 @@ router.get('/', async (_req, res) => {
 });
 
 router.post('/', async (req, res) => {
-  const { description, nodeId } = req.body;
+  const { description, nodeId, type, code, payload } = req.body;
 
-  if (!description || !nodeId) {
+  if (!description || !nodeId || !type) {
     return res.status(400).json({
-      message: 'Se deben proporcionar una descripción y un identificador de nodo.',
+      message: 'Se deben proporcionar una descripción, un identificador de nodo y un tipo de tarea.',
     });
   }
 
   try {
-    const task = await prisma.task.create({ data: { description, nodeId, status: TaskStatus.pending } });
+    const task = await prisma.task.create({
+      data: { description, nodeId, type, code, payload, status: TaskStatus.pending },
+    });
+
     res.json(task);
   } catch (error) {
     res.status(500).json({ message: (error as Error).message });
