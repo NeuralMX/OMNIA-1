@@ -1,4 +1,4 @@
-import { PrismaClient, TaskStatus, TaskType, TokenRole } from '@prisma/client';
+import { PrismaClient, TaskStatus, TokenRole } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
@@ -11,6 +11,24 @@ async function main() {
     },
   });
   console.log('Master Token creado', masterToken);
+
+  const userToken = await prisma.token.create({
+    data: {
+      email: 'user@neuralmx.com',
+      hash: 'USER_TOKEN_OMNIA',
+      role: TokenRole.user,
+    },
+  });
+  console.log('User Token creado', userToken);
+
+  // Tasks
+  const taskType = await prisma.taskType.create({
+    data: {
+      name: 'TaskType de prueba',
+      description: 'Un TaskType de prueba',
+      reward: 1,
+    },
+  });
 
   const node1 = await prisma.node.create({
     data: {
@@ -34,7 +52,7 @@ async function main() {
       {
         nodeId: node1.id,
         description: 'Tarea 1 del nodo 1',
-        type: TaskType.inference,
+        typeId: taskType.id,
         code: 'print("Hola mundo")',
         payload: JSON.stringify({ image_url: 'https://mi_imagen.jpg' }),
         status: TaskStatus.pending,
@@ -42,7 +60,7 @@ async function main() {
       {
         nodeId: node1.id,
         description: 'Tarea 2 del nodo 1',
-        type: TaskType.training,
+        typeId: taskType.id,
         code: 'print("Entrenando modelo...")',
         payload: JSON.stringify({ dataset_url: 'https://mi_dataset.csv' }),
         status: TaskStatus.completed,
@@ -72,7 +90,7 @@ async function main() {
       {
         nodeId: node2.id,
         description: 'Tarea 1 del nodo 2',
-        type: TaskType.fine_tuning,
+        typeId: taskType.id,
         code: 'print("Fine-tuning de modelo...")',
         payload: JSON.stringify({ model_url: 'https://mi_modelo.h5' }),
         status: TaskStatus.in_progress,
@@ -80,7 +98,7 @@ async function main() {
       {
         nodeId: node2.id,
         description: 'Tarea 2 del nodo 2',
-        type: TaskType.execute_code,
+        typeId: taskType.id,
         code: 'print("Ejecutando código personalizado...")',
         payload: JSON.stringify({}),
         status: TaskStatus.pending,

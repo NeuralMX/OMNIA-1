@@ -1,5 +1,5 @@
 import express from 'express';
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient, Task } from '@prisma/client';
 import { authenticate, authorize } from '../middleware/auth';
 
 const prisma = new PrismaClient();
