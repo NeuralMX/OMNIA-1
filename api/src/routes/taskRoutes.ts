@@ -14,9 +14,9 @@ router.get('/', async (_req, res) => {
 });
 
 router.post('/', async (req, res) => {
-  const { description, nodeId, type, code, payload } = req.body;
+  const { description, nodeId, typeId, code, payload } = req.body;
 
-  if (!description || !nodeId || !type) {
+  if (!description || !nodeId || !typeId) {
     return res.status(400).json({
       message: 'Se deben proporcionar una descripción, un identificador de nodo y un tipo de tarea.',
     });
@@ -24,7 +24,7 @@ router.post('/', async (req, res) => {
 
   try {
     const task = await prisma.task.create({
-      data: { description, nodeId, type, code, payload, status: TaskStatus.pending },
+      data: { description, nodeId, typeId, code, payload, status: TaskStatus.pending },
     });
 
     res.json(task);
@@ -60,6 +60,25 @@ router.delete('/:id', async (req, res) => {
   try {
     const task = await prisma.task.delete({ where: { id } });
     res.json(task);
+  } catch (error) {
+    res.status(500).json({ message: (error as Error).message });
+  }
+});
+
+router.get('/node/:nodeId/reward', async (req, res) => {
+  const { nodeId } = req.params;
+
+  try {
+    const tasks = await prisma.task.findMany({
+      where: { nodeId },
+      select: { type: { select: { reward: true } } },
+    });
+
+    const totalReward = tasks.reduce((total, task) => {
+      return total + (task.type?.reward || 0);
+    }, 0);
+
+    res.json({ totalTasks: tasks.length, totalReward });
   } catch (error) {
     res.status(500).json({ message: (error as Error).message });
   }

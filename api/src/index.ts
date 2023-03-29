@@ -1,10 +1,10 @@
 import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
-import { errorHandler } from './middleware/errorHandler';
 import { PrismaClient } from '@prisma/client';
 import nodeRoutes from './routes/nodeRoutes';
 import taskRoutes from './routes/taskRoutes';
+import taskTypeRoutes from './routes/taskTypeRoutes';
 import authRoutes from './routes/authRoutes';
 
 const prisma = new PrismaClient();
@@ -18,13 +18,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 // Routes
-app.use('/', (_req, res) => res.send('OMNIA-1'));
+app.get('/', (_req, res) => res.send('OMNIA-1'));
 app.use('/api/auth', authRoutes);
 app.use('/api/nodes', nodeRoutes);
 app.use('/api/tasks', taskRoutes);
-
-// Error handling
-app.use(errorHandler);
+app.use('/api/task-types', taskTypeRoutes);
 
 const PORT = process.env.PORT || 3000;
 
