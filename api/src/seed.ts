@@ -32,6 +32,7 @@ async function main() {
 
   const node1 = await prisma.node.create({
     data: {
+      deviceId: 'device1',
       name: 'Nodo 1',
       ipAddress: '192.168.0.1',
       description: 'Este es el nodo 1 de la red.',
@@ -70,6 +71,7 @@ async function main() {
 
   const node2 = await prisma.node.create({
     data: {
+      deviceId: 'device2',
       name: 'Nodo 2',
       ipAddress: '192.168.0.2',
       description: 'Este es el nodo 2 de la red.',

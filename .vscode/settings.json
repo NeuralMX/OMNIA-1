@@ -1,15 +1,21 @@
 {
-    "cSpell.language": "en,es-ES",
-    "cSpell.words": [
-        "encriptación",
-        "escalabilidad",
-        "keras",
-        "mantenibilidad",
-        "modularidad",
-        "OMNIA",
-        "Ryzen",
-        "tensorflow"
-    ],
-    "editor.formatOnSave": true,
-    "editor.tabSize": 2
+  "cSpell.language": "en,es-ES",
+  "cSpell.words": [
+    "encriptación",
+    "escalabilidad",
+    "gethostname",
+    "keras",
+    "mantenibilidad",
+    "modularidad",
+    "OMNIA",
+    "oneofs",
+    "psutil",
+    "Ryzen",
+    "socketio",
+    "tensorflow",
+    "tsoa"
+  ],
+  "editor.formatOnSave": true,
+  "editor.tabSize": 4,
+  "python.analysis.typeCheckingMode": "basic"
 }

@@ -1,5 +1,5 @@
 import express from 'express';
-import { PrismaClient, Task } from '@prisma/client';
+import { PrismaClient } from '@prisma/client';
 import { authenticate, authorize } from '../middleware/auth';
 
 const prisma = new PrismaClient();
@@ -43,6 +43,7 @@ router.post('/', authenticate, authorize('admin'), async (req, res) => {
     ram,
     storage,
     os,
+    deviceId,
   } = req.body;
 
   try {
@@ -60,10 +61,12 @@ router.post('/', authenticate, authorize('admin'), async (req, res) => {
         ram,
         storage,
         os,
+        deviceId,
       },
     });
     res.json(node);
   } catch (error) {
+    console.log(error);
     res.status(500).json({ message: (error as Error).message });
   }
 });
@@ -116,6 +119,24 @@ router.delete('/:id', authenticate, authorize('admin'), async (req, res) => {
     await prisma.node.delete({ where: { id } });
     res.json({ message: 'Node deleted' });
   } catch (error) {
+    res.status(500).json({ message: (error as Error).message });
+  }
+});
+
+// findByDeviceId
+router.get('/findByDeviceId/:deviceId', authenticate, authorize('admin'), async (req, res) => {
+  const { deviceId } = req.params;
+
+  try {
+    const node = await prisma.node.findUnique({ where: { deviceId } });
+    if (!node) {
+      res.status(404).json({ message: 'Node not found' });
+    } else {
+      res.json(node);
+    }
+  } catch (error) {
+    console.log(error);
+
     res.status(500).json({ message: (error as Error).message });
   }
 });

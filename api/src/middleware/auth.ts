@@ -20,6 +20,7 @@ export const authenticate = (req: AuthenticatedRequest, res: Response, next: Nex
     req.user = decoded;
     next();
   } catch (error) {
+    console.log(error);
     res.status(401).json({ message: (error as Error).message });
   }
 };
