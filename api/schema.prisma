@@ -9,6 +9,7 @@ datasource db {
 
 model Node {
   id             String  @id @default(uuid())
+  deviceId       String  @unique
   name           String
   ipAddress      String
   description    String?

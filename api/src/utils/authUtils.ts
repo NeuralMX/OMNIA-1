@@ -21,8 +21,10 @@ export const createToken = async (hash: string): Promise<string> => {
 export const verifyToken = (jwtToken: string): Record<string, unknown> => {
   try {
     const decoded = jwt.verify(jwtToken, process.env.JWT_SECRET || '');
+    console.log('decoded token', decoded);
     return decoded as Record<string, unknown>;
   } catch (error) {
+    console.log(error);
     throw new Error('Token inválido.');
   }
 };
